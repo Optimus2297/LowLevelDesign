@@ -1,3 +1,5 @@
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,8 +56,9 @@ public class ParkingSpotManager {
         return null;
     }
 
-    public int vacateVehicle(Ticket ticket){
-        if(isActive.containsKey(isActive.get(ticket.getTicketID()))){
+    public long vacateVehicle(Ticket ticket){
+        int key = ticket.getTicketID();
+        if(isActive.containsKey(key)){
             ParkingSpot p = ticket.getP();
             p.setAvailable(true);
             isActive.remove(ticket.getTicketID());
@@ -64,9 +67,12 @@ public class ParkingSpotManager {
        throw new RuntimeException("Invalid Ticket");
     }
 
-    public int generateBill(Ticket ticket){
+    public long generateBill(Ticket ticket){
         LocalDateTime entryTime = ticket.getEntryTime();
-        int hours = Math.abs(LocalDateTime.now().getMinute() - entryTime.getMinute());
-        return ticket.getP().getPrice() * 5;
+        LocalDateTime exitTime = LocalDateTime.now();
+        Duration duration = Duration.between(entryTime, exitTime);
+        long minutes = (duration.toMinutes() + 59) / 60;
+        System.out.println(minutes);
+        return ticket.getP().getPrice() * minutes;
     }
 }

@@ -15,13 +15,27 @@ public class Main {
         Ticket t3 = manager.parkVehicle(v3);
         Ticket t4 = manager.parkVehicle(v4);
 
-        Ticket t = new Ticket(LocalDateTime.now(), 10, new ParkingSpot(1,20));
-        manager.vacateVehicle(t);
+//        Ticket t = new Ticket(LocalDateTime.now(), 10, new ParkingSpot(1,20));
+//        manager.vacateVehicle(t);
 
-        int billv1 = manager.vacateVehicle(t1);
+        // Simulate some delay (for testing)
+        try {
+            Thread.sleep(5000); // 5 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        long billv1 = manager.vacateVehicle(t1);
         System.out.println("The genertaed bill for vehicle v1 is " + billv1);
 
-        int billv2 = manager.vacateVehicle(t3);
+        // Simulate some delay (for testing)
+        try {
+            Thread.sleep(5000); // 5 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        long billv2 = manager.vacateVehicle(t3);
         System.out.println("The genertaed bill for vehicle v3 is " + billv2);
     }
 }
